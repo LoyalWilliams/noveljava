@@ -1,0 +1,30 @@
+-- drop TABLE  if EXISTS novel;
+CREATE TABLE `novel` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '小说表自增主键',
+  `name` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '书名',
+  `author` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '作者名',
+  `img` varchar(100) CHARACTER SET utf8mb4 COMMENT '封面的链接',
+  `collection` int(11) COMMENT '收藏数',
+  `length` int(11) COMMENT '小说长度',
+  `total_click` int(11) COMMENT '总点击数',
+  `month_click` int(11) COMMENT '本月点击',
+  `week_click` int(11) COMMENT '本周点击',
+  `total_recommend` int(11) COMMENT '总推荐数',
+  `month_recommend` int(11) COMMENT '本月推荐',
+  `week_recommend` int(11) COMMENT '本周推荐',
+  `introduction` text CHARACTER SET utf8mb4 COMMENT '小说简介',
+  `comment` text CHARACTER SET utf8mb4 COMMENT '小说评论',
+  `novel_url` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '小说详情链接',
+  `chapter_url` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '小说章节链接',
+  `TYPE` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '小说的类别：如武侠修真，都市言情',
+  `last_update_chapter` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后一章的章节名',
+  `last_update_chapter_url` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后一章的url',
+  `last_update_time` datetime DEFAULT NULL COMMENT '小说最后的更新时间',
+  `STATUS` int(5) DEFAULT NULL COMMENT '小说的状态：1 连载 2 完结',
+  `first_letter` char(1) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '书名的首字母',
+  `platform_id` int(5) DEFAULT NULL COMMENT '小说平台的id',
+  `add_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '这本小说存储到我们数据库的时间',
+  PRIMARY KEY (`id`),
+UNIQUE key (name,author)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+;
