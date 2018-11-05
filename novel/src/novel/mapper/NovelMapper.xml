@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="novel.dao.NovelMapper" >
+  <resultMap id="BaseResultMap" type="novel.model.Novel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="collection" property="collection" jdbcType="INTEGER" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="total_click" property="totalClick" jdbcType="INTEGER" />
+    <result column="month_click" property="monthClick" jdbcType="INTEGER" />
+    <result column="week_click" property="weekClick" jdbcType="INTEGER" />
+    <result column="total_recommend" property="totalRecommend" jdbcType="INTEGER" />
+    <result column="month_recommend" property="monthRecommend" jdbcType="INTEGER" />
+    <result column="week_recommend" property="weekRecommend" jdbcType="INTEGER" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="novel_url" property="novelUrl" jdbcType="VARCHAR" />
+    <result column="chapter_url" property="chapterUrl" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="last_update_chapter" property="lastUpdateChapter" jdbcType="VARCHAR" />
+    <result column="last_update_chapter_url" property="lastUpdateChapterUrl" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="first_letter" property="firstLetter" jdbcType="CHAR" />
+    <result column="platform_id" property="platformId" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, author, img, collection, length, total_click, month_click, week_click, 
+    total_recommend, month_recommend, week_recommend, introduction, comment, novel_url, 
+    chapter_url, TYPE, last_update_chapter, last_update_chapter_url, last_update_time, 
+    STATUS, first_letter, platform_id, add_time
+  </sql>
+  
+  <select id="selectPageNovelsByKeyWord" resultMap="BaseResultMap" parameterType="novel.base.Page" >
+    select * from novel where name like  '%${t}%' or author like '%${t}%' 
+    limit #{pager.offset},#{pager.pageSize}
+  </select>
+  <select id="selectByNovelUrl" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel where novel_url=#{url}
+  </select>
+   <select id="selectPageNovelsByOther" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel where TYPE like '%其他%' 
+     ORDER BY week_click desc   limit #{offset},#{pageSize}
+  </select>
+   <select id="selectPageNovelsByGirlRecommend" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel where TYPE like '%耽美%' 
+     or TYPE like '%都市%' or TYPE like '%同人%'
+     or TYPE like '%言情%' 
+     ORDER BY week_click desc   limit #{offset},#{pageSize}
+  </select>
+  <select id="selectPageNovelsByBoyRecommend" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel where TYPE like '%武侠%'
+    or TYPE like '%修真%' or TYPE like '%游戏%'
+    or TYPE like '%军事%' or TYPE like '%科幻%'
+    ORDER BY week_click desc   limit #{offset},#{pageSize}
+  </select>
+  <select id="selectPageNovelsByWeekRecommend" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel  ORDER BY week_recommend desc  limit #{offset},#{pageSize}
+  </select>
+  <select id="selectPageNovelsByMonthRecommend" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel  ORDER BY month_recommend desc  limit #{offset},#{pageSize}
+  </select>
+  
+  <select id="selectPageNovelsByRecommend" resultMap="BaseResultMap" parameterType="novel.base.Pager" >
+    select * from novel  ORDER BY total_recommend desc  limit #{offset},#{pageSize}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from novel
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from novel
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="novel.model.Novel" >
+    insert into novel (id, name, author, 
+      img, collection, length, 
+      total_click, month_click, week_click, 
+      total_recommend, month_recommend, week_recommend, 
+      introduction, comment, novel_url, 
+      chapter_url, TYPE, last_update_chapter, 
+      last_update_chapter_url, last_update_time, 
+      STATUS, first_letter, platform_id, 
+      add_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{collection,jdbcType=INTEGER}, #{length,jdbcType=INTEGER}, 
+      #{totalClick,jdbcType=INTEGER}, #{monthClick,jdbcType=INTEGER}, #{weekClick,jdbcType=INTEGER}, 
+      #{totalRecommend,jdbcType=INTEGER}, #{monthRecommend,jdbcType=INTEGER}, #{weekRecommend,jdbcType=INTEGER}, 
+      #{introduction,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{novelUrl,jdbcType=VARCHAR}, 
+      #{chapterUrl,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{lastUpdateChapter,jdbcType=VARCHAR}, 
+      #{lastUpdateChapterUrl,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{firstLetter,jdbcType=CHAR}, #{platformId,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="novel.model.Novel" >
+    insert into novel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="collection != null" >
+        collection,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="totalClick != null" >
+        total_click,
+      </if>
+      <if test="monthClick != null" >
+        month_click,
+      </if>
+      <if test="weekClick != null" >
+        week_click,
+      </if>
+      <if test="totalRecommend != null" >
+        total_recommend,
+      </if>
+      <if test="monthRecommend != null" >
+        month_recommend,
+      </if>
+      <if test="weekRecommend != null" >
+        week_recommend,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="novelUrl != null" >
+        novel_url,
+      </if>
+      <if test="chapterUrl != null" >
+        chapter_url,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="lastUpdateChapter != null" >
+        last_update_chapter,
+      </if>
+      <if test="lastUpdateChapterUrl != null" >
+        last_update_chapter_url,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="firstLetter != null" >
+        first_letter,
+      </if>
+      <if test="platformId != null" >
+        platform_id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="collection != null" >
+        #{collection,jdbcType=INTEGER},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="totalClick != null" >
+        #{totalClick,jdbcType=INTEGER},
+      </if>
+      <if test="monthClick != null" >
+        #{monthClick,jdbcType=INTEGER},
+      </if>
+      <if test="weekClick != null" >
+        #{weekClick,jdbcType=INTEGER},
+      </if>
+      <if test="totalRecommend != null" >
+        #{totalRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="monthRecommend != null" >
+        #{monthRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="weekRecommend != null" >
+        #{weekRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="novelUrl != null" >
+        #{novelUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterUrl != null" >
+        #{chapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateChapter != null" >
+        #{lastUpdateChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateChapterUrl != null" >
+        #{lastUpdateChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="firstLetter != null" >
+        #{firstLetter,jdbcType=CHAR},
+      </if>
+      <if test="platformId != null" >
+        #{platformId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="novel.model.Novel" >
+    update novel
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="collection != null" >
+        collection = #{collection,jdbcType=INTEGER},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="totalClick != null" >
+        total_click = #{totalClick,jdbcType=INTEGER},
+      </if>
+      <if test="monthClick != null" >
+        month_click = #{monthClick,jdbcType=INTEGER},
+      </if>
+      <if test="weekClick != null" >
+        week_click = #{weekClick,jdbcType=INTEGER},
+      </if>
+      <if test="totalRecommend != null" >
+        total_recommend = #{totalRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="monthRecommend != null" >
+        month_recommend = #{monthRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="weekRecommend != null" >
+        week_recommend = #{weekRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="novelUrl != null" >
+        novel_url = #{novelUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterUrl != null" >
+        chapter_url = #{chapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateChapter != null" >
+        last_update_chapter = #{lastUpdateChapter,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateChapterUrl != null" >
+        last_update_chapter_url = #{lastUpdateChapterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="firstLetter != null" >
+        first_letter = #{firstLetter,jdbcType=CHAR},
+      </if>
+      <if test="platformId != null" >
+        platform_id = #{platformId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="novel.model.Novel" >
+    update novel
+    set name = #{name,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      collection = #{collection,jdbcType=INTEGER},
+      length = #{length,jdbcType=INTEGER},
+      total_click = #{totalClick,jdbcType=INTEGER},
+      month_click = #{monthClick,jdbcType=INTEGER},
+      week_click = #{weekClick,jdbcType=INTEGER},
+      total_recommend = #{totalRecommend,jdbcType=INTEGER},
+      month_recommend = #{monthRecommend,jdbcType=INTEGER},
+      week_recommend = #{weekRecommend,jdbcType=INTEGER},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      novel_url = #{novelUrl,jdbcType=VARCHAR},
+      chapter_url = #{chapterUrl,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      last_update_chapter = #{lastUpdateChapter,jdbcType=VARCHAR},
+      last_update_chapter_url = #{lastUpdateChapterUrl,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=INTEGER},
+      first_letter = #{firstLetter,jdbcType=CHAR},
+      platform_id = #{platformId,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

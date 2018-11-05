@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="手机小说，网络小说，免费小说，都市小说，言情小说，玄幻小说，网游小说，军事小说，历史小说，穿越小说"
+        />
+        <meta name="description" content="看书网,专业原创小说网站,提供最新言情,都市校园,穿越,网游,玄幻,武侠,科幻,历史等小说免费阅读和小说下载,是最好看的小说阅读网。看小说,就上流溪阁书屋！"
+        />
+        <link rel="canonical" href="index" />
+        <title>
+            流溪阁书屋小说网站
+        </title>
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1,user-scalable=no">
+        <link href="img/logo_lxg.png" rel="apple-touch-icon-precomposed" />
+        <link href="img/logo_lxg.png" rel="icon" type="image/x-icon" />
+        <link href="img/logo_lxg.png" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="css/loadingBar.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> 
+        <script type="text/javascript" src="script/easying.js"></script>
+        <script src="script/jquery.beattext.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('p#roloadText').beatText({isAuth:true,beatHeight:"1em",isRotate:false,upTime:100,downTime:100});
+            });
+        </script>
+
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">    -->
+<!-- <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+      -->
+
+        <link rel="stylesheet" href="css/style.css">
+<!-- <script src="script/jquery.js"></script>   -->
+<!-- <link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />  -->
+
+<!-- <script src="script/jquery.mobile-1.3.2.min.js"></script> -->
+ <script  src="script/main.js?223"></script>
+    </head>
+    <script type="text/javascript">
+        $(function () {
+            $("input").click(function() {
+                // alert($(this).attr('value'));
+                if ($(this).attr('value')=="请输入作者或小说名") {
+                    $(this).attr('value', '');
+                }
+            
+        });
+    })
+        
+    </script>
+    <body>
+        <script src="script/require.js">
+        </script>
+        <div class="top">
+            <h1 class="fl">
+                <img src="img/logo_lxg.png" width="76" height="32" />
+            </h1>
+           <!--  <p class="fr">
+               <a href="login.html" class="icon_user"
+               title="个人中心">
+                   个人中心
+               </a>
+           </p> -->
+        </div>
+        <div class="top_menu">
+            <div class="topnav" >
+                <a href="index.html" class="cur">首页 <b></b></a>
+                <!-- <a href="nspd.html">男生<b></b></a> -->
+                <!-- <a href="nvshengpd.html">女生<b></b></a> -->
+                <!-- <a href="chubanshe.html">免费<b></b></a> -->
+                <!-- <a href="login.html">书架<b></b></a> -->
+            </div>
+
+        </div>
+
+       <!--  <div class="top_sign">
+           <span class="usr_grade">
+               登录查看我的等级
+           </span>
+           <span class="usr_sign">
+               <a href="login.html">登录</a>
+           </span>
+       </div> -->
+        <div class="search">
+            <div class="searchbox mt10 clearfix">
+                <form action="searchNovel.action" method="post" id="inputForm">
+                    <input type="hidden" name="index" value="0" />
+                    <input name="kw" type="text" class="t_i" placeholder="搜书搜作者" autocomplete="off"
+                    value="请输入作者或小说名" />
+                    <input type="hidden" name="search" value="aname" />
+                    <div class="searchbtn">
+                        <span class="t_b">
+                        </span>
+                        <span class="t_t">
+                            搜索
+                        </span>
+                        <input class="clearfix" type="button" value="" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">
+                </span>
+            </h3>
+            <div class="blist">
+            <ul id="indexRecommendNovels">
+                <div class="loadingBar">
+                    <div id="colorfulPulse">
+                        <span class="item-1"></span>
+                        <span class="item-2"></span>
+                        <span class="item-3"></span>
+                        <span class="item-4"></span>
+                        <span class="item-5"></span>
+                        <span class="item-6"></span>
+                        <span class="item-7"></span>
+                    </div>
+                    <div class="container">
+                        <p id="roloadText">正在加载中...</p>
+                    </div>
+                </div>
+
+            </ul>
+            </div>
+        </div>
+        <div class="block">
+
+          <!--   <p class="item ">
+          
+              <a href="marketing/go-14.html@cnl=kanshu&sid=-jlfcT4pLcKDMWGdK6tas1" class="t_b btn_vip">
+          
+                  开通VIP，手机全站免费畅读！
+          
+              </a>
+          
+          </p> -->
+
+        </div>
+        <div class="section">
+            <div class="btm_nav">
+                <ul>
+                    <li><a href="##">热销榜</a></li>
+                    <li><a href="##">人气榜</a></li>
+                    <li><a href="##">更新榜</a></li>
+                    <li><a href="##">新书榜</a></li>
+                    <li><a href="##">收藏榜</a></li>
+                    <li><a href="##">热评榜</a></li>
+                    <li><a href="##">红花榜</a></li>
+                    <li><a href="##">打赏榜</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">
+                    热门小说
+                </span>
+            </h3>
+            <div class="box tab-pane clearfix">
+                <div class="blist tab-content active">
+                    <ul id="hotNovels">
+<div class="loadingBar">
+    <div id="colorfulPulse">
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="container">
+        <p id="roloadText">正在加载中...</p>
+    </div>
+</div>
+
+
+                    </ul>
+                    <ul>
+                        <li class="item_more">
+                            <a href="javascript:void(0)" class="more" id="hotMore">
+                                更多作品&gt;
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">
+                    粉丝评价榜
+                </span>
+                <span class="b_r tab-nav">
+                    <a href="##" class="cur">打赏</a>
+                    <a href="##">红花</a>
+                    <a href="##">热评</a>
+                </span>
+            </h3>
+            <div class="box tab-pane clearfix">
+                <div class="blist tab-content active">
+                    <ul id="fanNovels"> 
+<div class="loadingBar">
+    <div id="colorfulPulse">
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="container">
+        <p id="roloadText">正在加载中...</p>
+    </div>
+</div>
+
+                    </ul>
+                    <ul>
+                        <li class="item_more">
+                            <a href="##" class="more">
+                                更多作品&gt;
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="blist tab-content">
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">
+                    男生推荐
+                </span>
+                <span class="b_r tab-nav">
+                    <a href="##" class="cur">热销</a>
+                    <a href="##">人气</a>
+                    <a href="##">新书</a>
+                </span>
+            </h3>
+            <div class="box tab-pane clearfix">
+                <div class="blist tab-content active">
+                    <ul id="boyNovels">
+<div class="loadingBar">
+    <div id="colorfulPulse">
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="container">
+        <p id="roloadText">正在加载中...</p>
+    </div>
+</div>
+
+
+                    </ul>
+                    <ul>
+                        <li class="item_more">
+                            <a href="##" class="more">
+                                更多作品&gt;
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="blist tab-content">
+                    <ul>
+                        <li class="item_more">
+                            <a href="##" class="more">
+                                更多作品&gt;
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="blist tab-content">
+                    <ul>
+                        <li class="item_more">
+                            <a href="##" class="more">
+                                更多作品&gt;
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="top_class">
+
+            <div class="list_nav">
+
+                <ul>
+                    <li><a href='##'>玄幻奇幻</a></li>
+                    <li><a href='##'>武侠仙侠</a></li>
+                    <li><a href='##'>都市异能</a></li>
+                    <li><a href='##'>历史军事</a></li>
+                    <li><a href='##'>游戏竞技</a></li>
+                    <li><a href='##'>科幻灵异</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">女生推荐</span>
+                <span class="b_r tab-nav">
+                    <a href="##" class="cur">热销</a>
+                    <a href="##">人气</a>
+                    <a href="##">新书</a>
+                </span>
+            </h3>
+            <div class="box tab-pane clearfix">
+                <div class="blist tab-content active">
+                    <ul id="girlNovels"> 
+<div class="loadingBar">
+    <div id="colorfulPulse">
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="container">
+        <p id="roloadText">正在加载中...</p>
+    </div>
+</div>
+
+                    </ul>
+
+                    <ul>
+                        <li class="item_more">
+                            <a href="##">
+                                更多作品&gt;
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="blist tab-content">
+
+                    <ul>
+                        <li></li>
+                    </ul>
+
+                </div>
+
+                <div class="blist tab-content">
+
+                    <ul>
+
+                        <li>
+                        </li>
+
+                        <li class="item_more">
+
+                            <a href="order/3-2-9-4.html@cnl=kanshu&sid=-jlfcT4pLcKDMWGdK6tas1" class="more">
+
+                                更多作品&gt;
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="top_class">
+
+            <div class="list_nav">
+                <ul>
+                    <li><a href='##'>现代言情</a></li>
+                    <li><a href='##'>青春校园</a></li>
+                    <li><a href='##'>古代言情</a></li>
+                    <li><a href='##'>仙幻奇缘</a></li>
+                    <li><a href='##'>历史时空</a></li>
+                    <li><a href='##'>耽美同人</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h3 class="title">
+                <span class="b_l">免费小说看个够</span>
+            </h3>
+            <div class="box tab-pane clearfix">
+                <div class="blist tab-content active">
+                    <ul id="otherNovels">
+<div class="loadingBar">
+    <div id="colorfulPulse">
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="container">
+        <p id="roloadText">正在加载中...</p>
+    </div>
+</div>
+
+
+                    </ul>
+                    <ul>
+                        <li class="item_more">
+                            <a href="##" class="more">更多作品&gt;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <p class="item mt15">
+                <a href="novelinfo/31016.html@cnl=kanshu&sid=-jlfcT4pLcKDMWGdK6tas1" class="t_b btn_vip">
+                    "仰望星空"收藏了
+                    <b>
+                        <网游洪荒之人道至尊>
+                    </b>
+                </a>
+            </p>
+        </div>
+
+        <div class="search">
+
+            <div class="searchbox mt10 clearfix">
+                <form action="searchNovel.action" method="post" >
+                    <input type="hidden" name="index" value="0" />
+                    <input name="kw" type="text" class="t_i" placeholder="搜书搜作者" autocomplete="off"
+                    value="" />
+                    <input type="hidden" name="search" value="aname" />
+                    <div class="searchbtn">
+                        <span class="t_b">
+                        </span>
+                        <span class="t_t">
+                            搜索
+                        </span>
+                        <input type="submit" value="" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="footer home-bg">
+            <div class="footer_nav clearfix">
+                <a href="#">首页</a>
+                <a href="##">书架</a>
+                <a href="##">分类</a>
+                <a href="##">留言</a>
+                <a href="##">个人中心</a>
+            </div>
+            <p class="edition mt20">
+                <span>
+                    <a href="##">
+                        普通版
+                    </a>|
+                    <a href="##" class="select">触屏版</a>
+                </span>
+            </p>
+            <p class="copyright mt20">
+                <b>流溪阁书屋</b>
+                <!-- wap.liuxige.com -->
+            </p>
+            <span id="gotop" class="icons icon-gotop">
+            </span>
+        </div>
+        <script src="script/common.js"></script>
+        <div class="pop_cover">
+        </div>
+        <div class="pop_tip">
+            <div class="pop_inner">
+                <div class="pop_cont">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

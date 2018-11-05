@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sites>
+	
+	<site>
+		<title>笔下文学</title>
+		<charset>UTF-8</charset>
+		<domain>www.bxwx9.org</domain>
+		<url>https://www.bxwx9.org/</url>
+		<chapter-list-selector>#TabCss dd a</chapter-list-selector>
+		<chapter-detail-title-selector>#title</chapter-detail-title-selector>
+		<chapter-detail-content-selector>#content</chapter-detail-content-selector>
+		<chapter-detail-prev-selector>#footlink a,2</chapter-detail-prev-selector>
+		<chapter-detail-next-selector>#footlink a,4</chapter-detail-next-selector>
+		<novel-selector>.grid tr</novel-selector>
+		<novel-next-page-selector>#pagelink .next</novel-next-page-selector>
+		<novel-info-img>.picborder</novel-info-img>
+		<novel-info-type></novel-info-type>
+	</site>
+</sites>

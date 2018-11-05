@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+ 
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:jdbc/jdbc.properties" />
+
+	<!-- 数据源，使用dbcp -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.DriverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" /> 
+	</bean>
+
+	<!-- sqlSessinFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:mybatis/mybatis.xml" />
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:novel/mapper/*.xml"></property>
+	</bean>
+	
+	<!-- spring容器负责实例化mapper接口(dao)的代理实现类的对象-->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="novel.dao"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		
+	</bean>
+	
+	
+ 		<!-- 事务管理器 -->
+ 		<!--
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		数据源
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	增强类
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	
+		<tx:attributes>
+			传播行为
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="search*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	切面
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* novel.service.impl.*.*(..))" />
+	</aop:config> -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
+        <!-- 核心线程数 -->       
+        <property name="corePoolSize" value="${task.core_pool_size}" />  
+        <!-- 最大线程数 -->    
+        <property name="maxPoolSize" value="${task.max_pool_size}" />  
+        <!-- 队列最大长度 -->  
+        <property name="queueCapacity" value="${task.queue_capacity}" />  
+        <!-- 线程池维护线程所允许的空闲时间，默认为60s -->  
+        <property name="keepAliveSeconds" value="${task.keep_alive_seconds}" />  
+    </bean>  
+    <!-- 注解式 -->  
+    <task:annotation-driven />  
+	
+</beans>
+

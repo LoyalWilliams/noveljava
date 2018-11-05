@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!-- 二级缓存和懒加载配置 -->
+   
+   
+    <!-- ssm整合的时候，关于数据源(连接信息和连接池交给spring来进行管理) -->
+    
+	<typeAliases >
+	   <package name="novel.model" />
+	</typeAliases>
+	
+	
+	
+	
+</configuration>
