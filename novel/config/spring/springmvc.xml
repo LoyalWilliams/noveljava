@@ -30,7 +30,17 @@
 	-->
 	<context:component-scan base-package="novel"></context:component-scan>
 	
-	
+
+    <!-- <context:component-scan base-package="novel.*"></context:component-scan>
+     -->
+   <!--   <aop:config>
+     <aop:aspect ref="redisAspect">
+     <aop:around method="around"  pointcut="execution(* novel.service.impl.*.*(..))"/>
+     </aop:aspect>
+     
+     </aop:config> -->
+     <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+    
 	
 	
      <bean

@@ -45,6 +45,11 @@ public class Page<T> {
 	public void setPager(Pager pager) {
 		this.pager = pager;
 	}
+	@Override
+	public String toString() {
+		return "Page [t=" + t + ", pager=" + pager + ", list=" + list
+				+ ", totalRows=" + totalRows + "]";
+	}
 
 	
 	

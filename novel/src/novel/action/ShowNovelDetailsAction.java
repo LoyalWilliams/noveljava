@@ -3,24 +3,20 @@ package novel.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
 import novel.model.Chapter;
 import novel.model.ChapterDetail;
 import novel.model.Novel;
+import novel.service.ChapterService;
 import novel.service.NovelService;
 import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.spider.util.NovelSpiderUtil;
-import novel.util.ChapterCallable;
 import novel.util.EncryptUtils;
 import novel.util.NovelUtils;
 import novel.vo.EncryptedChapter;
@@ -28,7 +24,6 @@ import novel.vo.EncryptedChapterDetail;
 import novel.vo.EncryptedNovel;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.jsoup.select.Elements;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +32,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ShowNovelDetailsAction {
-	{
-		NovelSpiderUtil.setConfPath("D:/code/webdevelop/conf/Spider-Rule.xml");
-//	NovelSpiderUtil.setConfPath("/conf/novelSpider/Spider-Rule.xml");
-	}
+	
 	@Resource
 	private NovelService novelService;
+	@Resource 
+	private ChapterService chapterService;
 	@Resource(name = "taskExecutor")
 	private ThreadPoolTaskExecutor taskExecutor;
 
@@ -50,8 +44,8 @@ public class ShowNovelDetailsAction {
 	@RequestMapping("binfo.action")
 //	展示某本小说的信息
 	public EncryptedNovel showNovel(long key){
-		Novel novel = novelService.getNovelById(key);
-		return EncryptUtils.encryptNovel(novel);
+		EncryptedNovel novel = novelService.getNovelById(key);
+		return novel;
 	}
 //	@ResponseBody
 //	@RequestMapping(value="chapterList.action",method=RequestMethod.POST)
@@ -123,9 +117,9 @@ public class ShowNovelDetailsAction {
 		} catch (IOException e) {
 			return new ArrayList<EncryptedChapter>();
 		}
-		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
-		List<Chapter> chapters = chapterSpider.getsChapter(url);
-		return EncryptUtils.encryptChapters(chapters);
+		 long time = System.currentTimeMillis();
+		List<EncryptedChapter> chapters = chapterService.getChapters(url);
+		return chapters;
 	}
 	
 	@ResponseBody
@@ -141,8 +135,7 @@ public class ShowNovelDetailsAction {
 		} catch (IOException e) {
 			return new ArrayList<EncryptedChapter>();
 		}
-		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
-		List<Chapter> chapters = chapterSpider.getsChapter(url,offset,length);
+		List<Chapter> chapters = chapterService.getChaptersgetsChapter(url,offset,length);
 		return EncryptUtils.encryptChapters(chapters);
 	}
 	
@@ -159,11 +152,9 @@ public class ShowNovelDetailsAction {
 		} catch (IOException e) {
 			return new EncryptedChapterDetail();
 		}
-		IChapterDetailSpider spider = NovelSpiderFactory.getChapterDetailSpider(url);
-		ChapterDetail chapterDetail = spider.getChapterDetail(url);
-		chapterDetail.setContent(chapterDetail.getContent().replace("\n", "<br/>"));
-		EncryptedChapterDetail encryptChapterDetail = EncryptUtils.encryptChapterDetail(chapterDetail);
-		return encryptChapterDetail;
+		
+		EncryptedChapterDetail chapterDetail = chapterService.getChapterDetail(url);
+		return chapterDetail;
 	}
 	
 }

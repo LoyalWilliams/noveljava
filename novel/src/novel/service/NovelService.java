@@ -5,17 +5,18 @@ import java.util.List;
 import novel.base.Pager;
 import novel.model.Novel;
 import novel.vo.ChapterContent;
+import novel.vo.EncryptedNovel;
 
 public interface NovelService {
 	public Novel getOneNovel(Long id);
-	public List<Novel> getRecommendNovels(Pager pager);
-	public List<Novel> getHotNovels(Pager pager);
-	public List<Novel> getFanNovels(Pager pager);
-	public List<Novel> getBoyNovels(Pager pager);
-	public List<Novel> getGirlNovels(Pager pager);
-	public List<Novel> getOtherNovels(Pager pager);
+	public List<EncryptedNovel> getRecommendNovels(Pager pager);
+	public List<EncryptedNovel> getHotNovels(Pager pager);
+	public List<EncryptedNovel> getFanNovels(Pager pager);
+	public List<EncryptedNovel> getBoyNovels(Pager pager);
+	public List<EncryptedNovel> getGirlNovels(Pager pager);
+	public List<EncryptedNovel> getOtherNovels(Pager pager);
 	public Novel getNovelByUrl(String url);
-	public Novel getNovelById(long key);
+	public EncryptedNovel getNovelById(long key);
 	public ChapterContent ChapterContent(String key);
 	public List<Novel> searchNovelByNameAuthor(String kw, Pager pager);
 }

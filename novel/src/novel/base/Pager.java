@@ -26,6 +26,11 @@ public class Pager {
 		public void setOffset(int offset) {
 			this.offset = offset;
 		}
+		@Override
+		public String toString() {
+			return "Pager [pageSize=" + pageSize + ", pageNum=" + pageNum
+					+ ", offset=" + offset + "]";
+		}
 		
 		
 		

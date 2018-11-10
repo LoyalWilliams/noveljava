@@ -1,11 +1,16 @@
 package novel.vo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import novel.model.Novel;
 
-public class EncryptedNovel {
+public class EncryptedNovel  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Novel novel;
 	private Map<String,List<Integer>> keys;
 	public Novel getNovel() {

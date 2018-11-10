@@ -1,7 +1,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
  
 	
@@ -18,7 +20,7 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- 加载配置文件 -->
-	<context:property-placeholder location="classpath:jdbc/jdbc.properties" />
+	<context:property-placeholder location="classpath:other/*" />
 
 	<!-- 数据源，使用dbcp -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -73,6 +75,10 @@
 		<aop:advisor advice-ref="txAdvice"
 			pointcut="execution(* novel.service.impl.*.*(..))" />
 	</aop:config> -->
+	
+	
+   <!--   <aop:aspectj-autoproxy/> -->
+	
 	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
         <!-- 核心线程数 -->       
         <property name="corePoolSize" value="${task.core_pool_size}" />  
@@ -85,6 +91,49 @@
     </bean>  
     <!-- 注解式 -->  
     <task:annotation-driven />  
+    
+    
+    <!-- jedis连接池配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最小空闲连接数 -->  
+         <property name="minIdle" value="${redis.minIdle}"/>
+         <!-- 最大空闲连接数 -->
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <!-- 最大连接数 -->    
+        <property name="maxActive" value="${redis.maxTotal}"/>
+        <!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->    
+        <property name="maxWait" value="${redis.maxWaitMillis}"/>
+        <!-- 在获取连接的时候检查有效性, 默认false -->   
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <!-- 每次释放连接的最大数目 -->
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+        <!-- 释放连接的扫描间隔（毫秒） -->
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"/>
+        <!-- 连接最小空闲时间 -->
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+        <!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+        <property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}"/>
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+        <!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+     <!--   <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>   -->
+    </bean>    
+    
+    <!-- redis连接池 -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+        <constructor-arg name="poolConfig" ref="poolConfig"/>
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port}"/>
+        <constructor-arg name="timeout" value="${redis.timeout}"/>
+        <constructor-arg name="password" value="${redis.password}"/>
+    </bean>
+    
+   
+   	<bean id="redisCache" class="novel.util.RedisCache">
+   	  	<property name="jedisPool" ref="jedisPool"></property>
+    </bean>
+    
+    <bean id="redisAspect" class="novel.redis.RedisAspect"></bean>
 	
 </beans>
 

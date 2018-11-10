@@ -37,7 +37,7 @@ public class ShowNovelsAction {
 	@ResponseBody
 	@RequestMapping("getNovel.action")
 	public  List<EncryptedNovel> getNovel(int index){
-		List<Novel> recommendNovels =null;
+		List<EncryptedNovel> recommendNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -48,14 +48,14 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			recommendNovels=novelService.getRecommendNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(recommendNovels);
+		return recommendNovels;
 	}
 	
 //	首页推荐小说
 	@ResponseBody
 	@RequestMapping("getIndexRecommendNovels.action")
 	public List<EncryptedNovel> getIndexRecommendNovels(int index){
-		List<Novel> recommendNovels =null;
+		List<EncryptedNovel> recommendNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -66,14 +66,14 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			recommendNovels=novelService.getRecommendNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(recommendNovels);
+		return recommendNovels;
 	}
 	
 //	热门小说推荐
 	@ResponseBody
 	@RequestMapping("getHotNovels.action")
 	public List<EncryptedNovel> getHotNovels(int index){
-		List<Novel> hotNovels =null;
+		List<EncryptedNovel> hotNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -84,14 +84,14 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			hotNovels=novelService.getHotNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(hotNovels);
+		return hotNovels;
 	}
 	
 //	粉丝推荐
 	@ResponseBody
 	@RequestMapping("getFanNovels.action")
 	public List<EncryptedNovel> getFanNovels(int index){
-		List<Novel> FanNovels =null;
+		List<EncryptedNovel> FanNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -102,14 +102,14 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			FanNovels=novelService.getFanNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(FanNovels);
+		return FanNovels;
 	}
 	
 //	男生推荐
 	@ResponseBody
 	@RequestMapping("getBoyNovels.action")
 	public List<EncryptedNovel> getBoyNovels(int index){
-		List<Novel> BoyNovels =null;
+		List<EncryptedNovel> BoyNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -120,13 +120,13 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			BoyNovels=novelService.getBoyNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(BoyNovels);
+		return BoyNovels;
 	}
 //	女生推荐
 	@ResponseBody
 	@RequestMapping("getGirlNovels.action")
 	public List<EncryptedNovel> getGirlNovels(int index){
-		List<Novel> FanNovels =null;
+		List<EncryptedNovel> FanNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -137,13 +137,13 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			FanNovels=novelService.getGirlNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(FanNovels);
+		return FanNovels;
 	}
 //	免费小说看不停
 	@ResponseBody
 	@RequestMapping("getOtherNovels.action")
 	public List<EncryptedNovel> getOtherNovels(int index){
-		List<Novel> otherNovels =null;
+		List<EncryptedNovel> otherNovels =null;
 		Pager pager = new Pager();
 		if(index==0){
 			pager.setOffset(index);
@@ -154,7 +154,7 @@ public class ShowNovelsAction {
 			pager.setPageSize(4);
 			otherNovels=novelService.getOtherNovels(pager);
 		}
-		return EncryptUtils.encryptNovels(otherNovels);
+		return otherNovels;
 	}
 	
 	

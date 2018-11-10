@@ -1,11 +1,16 @@
 package novel.vo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import novel.model.ChapterDetail;
 
-public class EncryptedChapterDetail {
+public class EncryptedChapterDetail  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ChapterDetail chapterDetail;
 	private Map<String,List<Integer>> keys;
 	public ChapterDetail getChapterDetail() {
