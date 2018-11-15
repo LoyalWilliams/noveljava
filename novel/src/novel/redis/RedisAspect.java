@@ -41,11 +41,11 @@ public class RedisAspect {
     public Object around(ProceedingJoinPoint joinPoint){
        //前置：到redis中查询缓存
       //先获取目标方法参数
-        String applId = null;
+        String applId = "";
         Object[] args = joinPoint.getArgs();
         if(args!=null && args.length > 0){
         	for (Object object : args) {
-        		applId += String.valueOf(args[0]);
+        		applId += String.valueOf(object);
 			}
         }
 //        //获取目标方法所在类
@@ -57,7 +57,9 @@ public class RedisAspect {
         
         //redis中key格式：    applId:方法名称
         String redisKey = applId + ":" + className + "." + methodName;
-        
+        System.out.println("applId:"+applId);
+        if(args.length==3)
+        System.out.println("argslength:"+args.length+"ar0:"+args[0]+"ar1:"+args[1]+"ar2:"+args[2]);
         System.out.println("redisKey:"+redisKey);
         
         RedisAnontation anontation = ((MethodSignature)joinPoint.getSignature()).getMethod().getAnnotation(RedisAnontation.class);

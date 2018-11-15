@@ -20,7 +20,7 @@
     <link href="../img/logo_lxg.png" rel="apple-touch-icon-precomposed" />
     <link href="../img/logo_lxg.png" rel="icon" type="image/x-icon" />
     <link href="../img/logo_lxg.png" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="../css/loadingBar.css">
+    <link rel="stylesheet" type="text/css" href="../css/loadingBar.css"></link>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="../script/easying.js"></script>
     <script src="../script/jquery.beattext.js"></script>
@@ -30,10 +30,16 @@
 
         });
     </script>
-    <script  src="../script/bookInfo.js?341"></script>
-    <script src="../script/toPage.js?1231"></script>
-      <link rel="stylesheet" href="../css/toPage.css?143">
-    <link rel="stylesheet" href="../css/style.css?111">
+    <script  src="../script/bookInfo.js?1345"></script>
+    <link rel="stylesheet" href="../css/style.css?112"></link>
+
+    <link rel="stylesheet" type="text/css" href="../css/paging.css">
+
+ <script src="../script/query.js"></script>
+    <script src="../script/paging.js"></script>
+   
+    <link rel="stylesheet" href="../css/toPage.css?1223">
+
 </head>
 <body>
 <script type="text/javascript">
@@ -45,7 +51,7 @@
             <span class="nav_left">
                 <a href="javascript:history.go(-1)">返回</a>
             </span>
-    <span class="nav_right" >
+    <span class="nav_right">
                <!--  <a rel="internal" href="../nspd@cnl=kanshu">男生</a>
                </h1> -->
             </span>
@@ -140,21 +146,64 @@
             </a>
         </div>
         <div class="tab-pane">
-            <ul class="clist tab-content active" id="chapters">
-                <div class="loadingBar">
-                    <div id="colorfulPulse">
-                        <span class="item-1"></span>
-                        <span class="item-2"></span>
-                        <span class="item-3"></span>
-                        <span class="item-4"></span>
-                        <span class="item-5"></span>
-                        <span class="item-6"></span>
-                        <span class="item-7"></span>
-                    </div>
-                    <div class="container">
-                        <p id="roloadText">正在加载中...</p>
-                    </div>
-                </div>
+        
+<!-- <h2 style="text-align: center">仿淘宝分页插件,完美兼容ie8,简单处理后可兼容更低版本ie</h2>
+ -->
+    <!--分页容器_1-->
+
+    <div class="page_1"></div>
+
+    <!--分页容器_2-->
+
+   <!--  <div class="page_2"></div> -->
+
+    <!--先引入jquery-->
+
+    <!--再引入toPage.js-->
+
+    <script src="../script/toPage.js?1231"></script>
+
+    <!--插件使用-->
+
+    <!-- <script>
+
+      /*容器1参数*/
+
+      var obj_1={
+
+        obj_box:'.page_1',//翻页容器
+
+        total_item:102,//条目总数
+
+        /*per_num:10,//每页条目数
+
+        current_page:8//当前页*/
+        current_page:8
+
+      };
+
+      /*容器2参数*/
+
+      var obj_2={
+
+        obj_box:'.page_2',//翻页容器
+
+        total_item:372,//条目总数
+
+        per_num:20,//每页条目数
+
+        current_page:8//当前页
+
+      };
+
+      /*调用分页方法,初始化数据*/
+
+      page_ctrl(obj_1);
+
+      // page_ctrl(obj_2);
+
+    </script> -->
+
 
 
                 <li>
@@ -260,144 +309,6 @@
 
     </div>
 
-    <!-- <div class="section">
-        <h3 class="title">
-            <span class="b_l">
-                你可能会喜欢
-            </span>
-        </h3>
-        <div class="blist">
-            <ul>
-                <li>
-                    <a href='48826.html@cnl=kanshu'>
-                        <div class="bcover fl">
-                            <img src="../img/48826_m.jpg" onerror="this.src='http://img.kanshu.com/articleInfo/images/nopic.jpg';this.onerror='';"
-                            alt="都市特种兵" height="130" width="85" />
-                        </div>
-                        <div class="bintro pl10">
-                            <h4>美女俏房客:都市特种兵</h4>
-                            <p>
-                                都市言情 . (连载中) . 400.7万字
-                                <br>
-
-                                打算退隐的雇佣军首领陈天，带着救下的腹黑可爱小LOLI回到苏杭开了个旅馆修养，却不想卷进了地下世界争斗之中，妖娆火爆的大姐大，冷霜若雪的绝美杀手，霸道娇横的漂亮大小姐，睿智无比的美女总裁，温情脉脉的俏校花齐齐闯进陈天的生活之中……且看一代雇佣兵王，如何携带众美在华夏如腾龙般崛起，威震世界！
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href='78354.html@cnl=kanshu'>
-
-                        <div class="bintro">
-
-                            <h4>
-
-                                神医救世界:御控神仙界
-
-                            </h4>
-
-                            <p>
-
-                                都市言情 . (连载中) . 80.8万字
-
-                                <br>
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href='42360.html@cnl=kanshu'>
-
-                        <div class="bintro">
-
-                            <h4>
-
-                                美女私密护理:医世无双
-
-                            </h4>
-
-                            <p>
-
-                                都市言情 . (连载中) . 362.0万字
-
-                                <br>
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href='77694.html@cnl=kanshu'>
-
-                        <div class="bintro">
-
-                            <h4>
-
-                                天眼邪医:专治奇术怪症
-
-                            </h4>
-
-                            <p>
-
-                                都市言情 . (连载中) . 53.0万字
-
-                                <br>
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href='50260.html@cnl=kanshu'>
-
-                        <div class="bintro">
-
-                            <h4>
-
-                                屌丝逆袭之路:权色官途
-
-                            </h4>
-
-                            <p>
-
-                                都市言情 . (连载中) . 287.5万字
-
-                                <br>
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </div>
-    </div> -->
     <div class="block">
         <p class="item mt15">
             <a href="##" class="t_b btn_vip">

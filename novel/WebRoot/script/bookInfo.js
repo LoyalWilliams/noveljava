@@ -46,7 +46,7 @@ $(function(){
 	var paras=parseUrl(searchURL);
 	var key=paras["key"];
 	// alert(paras["keys"]);
-	console.log("keys:"+paras["keys"]);
+	// console.log("keys:"+paras["keys"]);
 
 	function getNovelStatus(data){
 		if(data["status"]==1)status="连载中";else status="完结";
@@ -68,7 +68,7 @@ $(function(){
          +"<br/>"
          +"作者: "+data["author"]
          +" <br/>"
-         +getNovelLength(data)+"字 共300章 "
+         +getNovelLength(data)+"字 共X章 "
          +"<br/>"
          +"收藏: "+data["collection"]+" &nbsp;&nbsp; 点击: "+data["totalClick"]
          +" <br/>"
@@ -112,10 +112,7 @@ $(function(){
 
           	data= data["novel"];
           	console.log(data);
-          	// $("#novelName").html();
-          	// $("#novelStatus").html();
-          	// data=data["novel"];
-          	// alert(data);
+
           	var rightDiv=showRightDiv(data);
           	$("#picRight").html(rightDiv);
           	var updateDiv=showUpdate(data);
@@ -123,86 +120,16 @@ $(function(){
           	var introDiv=showIntro(data);
           	$("#intro").html(introDiv)
 
-          	// alert(rightDiv);
           	$("#nameAndStatus").html(data["name"]+"<span >("+getNovelStatus(data)+")</span >")
-          	// $("#novelLength").html(getNovelLength(data)+"字 共300章");
-          	// $("#novelAuthor").html("作者: "+data["author"]);
-          	// $("#novelType").html(data["type"]);
+          	
           	$("#novelPic").attr('src', data["img"]);
-          	// $("#novelIntroduction").html(data["introduction"].trim());
-          	// $("#lastUpdateChapter").html("最新章节："+data["lastUpdateChapter"].trim());
-          	// // alert(data["lastUpdateChapter"].trim());
-          	// $("#lastUpdateTime").html("("+data["lastUpdateTime"]+" 更新)");
           	
-          	// console.log($("#readNow").attr('href'));
 
             },
            error:function(){
                // alert('服务器超时，请重试！');
            }
         });
-
-    // alert(paras["u"]);
-// console.log({'encr':paras["encr"],keys:$.parseJSON(paras["keys"])});
-// console.log("novelUrl1:"+$.parseJSON(paras["keys"]));
-// // keys:{"novelUrl2":[51],"novelUrl1":[],"chapterUrl2":[55],"lastUpdateChapterUrl2":[55],"lastUpdateChapterUrl1":[],"chapterUrl1":[]}
-// $k=$.parseJSON(paras["keys"])["novelUrl1"]
-// console.log("novelUrl1isEmpty:" + isNaN($k)+ ($k=="")+"{}"+{})
-// novelUrl1
-// chapterUrl2
-// EncrAndKeys    JSON.stringify(data[i])
-
-    $.ajax({
-          url: '/novel/chapterIndexList.action',
-          type: 'post',
-          dataType: 'json',
-          data:{'encr':paras["encr"],keys:paras["keys"],offset:0,length:24},
-          success:function(data){
-          	// data= getNovels(data);
-          	console.log(data);
-          	var keys=getKeys(data);
-          	data=getChapters(data);
-          	var chapterLi="";
-            $("#readNow").attr('href', "chapterContent.html?encr="+data[0].url+"&keys="+JSON.stringify(keys[0]));
-          	for (var i = 0; i < data.length; i++) {
-          		chapterLi+="<li><div class=\"msg\"><a href='chapterContent.html?encr="+data[i].url+"&keys="+JSON.stringify(keys[i])+"'>"+data[i].title+"</a></div></li>"          		
-          		console.log("title:"+data[i].title+"url:"+data[i].url);
-          	}
-          	console.log(chapterLi);
-          	$("#chapters").html(chapterLi);
-          	
-            },
-           error:function(){
-               // alert('服务器超时，请重试！');
-           }
-        });
-// alert(0);
-// <ul class="clist tab-content active" id="chapters">
-                        // <li>
-                            // <div class="msg">111111111111</div>
-                        // </li>
-   	 $.ajax({
-          url: '/novel/chapterList.action',
-          type: 'post',
-          dataType: 'json',
-          data:{'encr':paras["encr"],keys:paras["keys"]},
-          success:function(data){
-          	// data= getNovels(data);
-          	// for (var i = data.length - 1; i >= 0; i--) {
-          		// console.log("title:"+data[i].title+"url:"+data[i].url);
-          	// }
-          	// console.log("chapterList:"+data);
-            console.log("yes");
-          	console.log(data);
-          	
-            },
-           error:function(){
-               // alert('服务器超时，请重试！');
-           }
-        });
-
-
-
 
 
 })

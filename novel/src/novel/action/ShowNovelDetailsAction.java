@@ -9,16 +9,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import novel.model.Chapter;
-import novel.model.ChapterDetail;
-import novel.model.Novel;
 import novel.service.ChapterService;
 import novel.service.NovelService;
-import novel.spider.interfaces.IChapterDetailSpider;
-import novel.spider.interfaces.IChapterSpider;
-import novel.spider.util.NovelSpiderFactory;
-import novel.spider.util.NovelSpiderUtil;
 import novel.util.EncryptUtils;
 import novel.util.NovelUtils;
+import novel.vo.ChapterList;
 import novel.vo.EncryptedChapter;
 import novel.vo.EncryptedChapterDetail;
 import novel.vo.EncryptedNovel;
@@ -125,7 +120,7 @@ public class ShowNovelDetailsAction {
 	@ResponseBody
 	@RequestMapping(value="chapterIndexList.action",method=RequestMethod.POST)
 //	展示某本小说的章节列表
-	public List<EncryptedChapter> showNovelChapters(String encr, String keys,int offset,int length){
+	public List<EncryptedChapter> showNovelNChapters(String encr, String keys,int offset,int length){
 		ObjectMapper mapper = NovelUtils.mapper;
 		String url;
 		try {
@@ -135,10 +130,27 @@ public class ShowNovelDetailsAction {
 		} catch (IOException e) {
 			return new ArrayList<EncryptedChapter>();
 		}
-		List<Chapter> chapters = chapterService.getChaptersgetsChapter(url,offset,length);
+		List<Chapter> chapters = chapterService.getChaptersByOffset(url,offset,length);
 		return EncryptUtils.encryptChapters(chapters);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="chapterNList.action",method=RequestMethod.GET)
+//	展示某本小说的章节列表
+	public ChapterList showNovelChapters(String encr, String keys,int offset,int length){
+		ObjectMapper mapper = NovelUtils.mapper;
+		String url;
+		try {
+			Map<String,List<Integer>> keyMap = mapper.readValue(keys, Map.class);
+			String encrChapterUrl = EncryptUtils.decryptNovelUrl(encr,"chapterUrl",keyMap);
+			url = EncryptUtils.decrypt(encrChapterUrl);
+		} catch (IOException e) {
+			return new ChapterList();
+		}
+		return chapterService.getChapters(url, offset, length);
+	}
+	
+//	ChapterList
 	@ResponseBody
 	@RequestMapping("chapterContent.action")
 //	展示某本小说某个章节的具体内容

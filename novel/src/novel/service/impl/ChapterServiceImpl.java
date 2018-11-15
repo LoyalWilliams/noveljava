@@ -1,8 +1,7 @@
 package novel.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import novel.annotation.RedisAnontation;
 import novel.annotation.RedisAnontation.SerialType;
@@ -14,8 +13,13 @@ import novel.spider.interfaces.IChapterSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.spider.util.NovelSpiderUtil;
 import novel.util.EncryptUtils;
+import novel.vo.ChapterList;
 import novel.vo.EncryptedChapter;
 import novel.vo.EncryptedChapterDetail;
+
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ChapterServiceImpl implements ChapterService {
@@ -28,18 +32,11 @@ public class ChapterServiceImpl implements ChapterService {
 	@Override
 	public List<EncryptedChapter> getChapters(String url) {
 		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
-		List<Chapter> chapters = chapterSpider.getsChapter(url);
+		List<Chapter> chapters = chapterSpider.getChapters(url);
 		return EncryptUtils.encryptChapters(chapters);
 	}
 
-	@RedisAnontation(clazz=EncryptedChapter.class,serialType=SerialType.LIST)
-	@Override
-	public List<Chapter> getChaptersgetsChapter(String url, int offset,
-			int length) {
-		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
-		List<Chapter> chapters = chapterSpider.getsChapter(url,offset,length);
-		return chapters;
-	}
+	
 
 	@RedisAnontation(clazz=EncryptedChapterDetail.class,serialType=SerialType.OBJ)
 	@Override
@@ -51,4 +48,26 @@ public class ChapterServiceImpl implements ChapterService {
 		return encryptChapterDetail;
 	}
 
+	@RedisAnontation(clazz=ChapterList.class,serialType=SerialType.OBJ)
+	@Override
+	public ChapterList getChapters(String url, int offset, int length) {
+		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
+		Elements elements = chapterSpider.getChapterElements(url);
+		List<Chapter> chapters = chapterSpider.getChapterFromElements(elements, offset, length);
+		int size = elements.size();
+		chapters = chapterSpider.getChapterFromElements(elements, offset, length);
+		ChapterList chapterList = new ChapterList();
+		chapterList.setChapters(EncryptUtils.encryptChapters(chapters));
+		chapterList.setTotal(size);
+		return chapterList;
+	}
+
+	@RedisAnontation(clazz=Chapter.class,serialType=SerialType.LIST)
+	@Override
+	public List<Chapter> getChaptersByOffset(String url, int offset,
+			int length) {
+		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
+		List<Chapter> chapters = chapterSpider.getChapters(url,offset,length);
+		return chapters;
+	}
 }
