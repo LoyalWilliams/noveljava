@@ -13,15 +13,17 @@ public interface IChapterSpider {
 	 * @param url
 	 * @return
 	 */
-	public List<Chapter> getsChapter(String url);
+	public List<Chapter> getChapters(String url);
 	/**
 	 * 给我们一个完整的url，我们就给你返回某几章
 	 * @param url
 	 * @return
 	 */
-	public List<Chapter> getsChapter(String url,int offset,int length);
+	public List<Chapter> getChapters(String url,int offset,int length);
 	
 	public Elements getChapterElements(String url); 
 	
 	public Chapter getChapterFromElement(Element e);
+	
+	public List<Chapter>  getChapterFromElements(Elements e,int offset,int length);
 }

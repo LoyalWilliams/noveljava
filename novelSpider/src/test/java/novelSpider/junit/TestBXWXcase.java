@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,6 +30,7 @@ import novel.spider.NovelSiteEnum;
 import novel.spider.impl.chapter.AbstractChapterDetailSpider;
 import novel.spider.impl.chapter.AbstractChapterSpider;
 import novel.spider.impl.chapter.BxwxChapterSpider;
+import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelInfoSpider;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderFactory;
@@ -117,7 +117,7 @@ public class TestBXWXcase {
 	public void testGetChapters(){
 		AbstractChapterSpider chapterSpider = new AbstractChapterSpider() {
 		};
-		List<Chapter> getsChapter = chapterSpider.getsChapter("https://www.bxwx9.org/b/33/33732/index.html");
+		List<Chapter> getsChapter = chapterSpider.getChapters("https://www.bxwx9.org/b/33/33732/index.html");
 		int cont=1;
 		for(Chapter chapter:getsChapter){
 			System.out.println(cont+""+chapter);
@@ -129,7 +129,7 @@ public class TestBXWXcase {
 	public void testGetChapters2(){
 		AbstractChapterSpider chapterSpider = new AbstractChapterSpider() {
 		};
-		List<Chapter> getsChapter = chapterSpider.getsChapter("https://www.bxwx9.org/b/21/21385/index.html",0,20);
+		List<Chapter> getsChapter = chapterSpider.getChapters("https://www.bxwx9.org/b/21/21385/index.html",0,20);
 		int cont=1;
 		for(Chapter chapter:getsChapter){
 			System.out.println(cont+""+chapter);
@@ -142,7 +142,7 @@ public class TestBXWXcase {
 	public void testGetChapters3(){
 		AbstractChapterSpider chapterSpider = new BxwxChapterSpider() {
 		};
-		List<Chapter> getsChapter = chapterSpider.getsChapter("https://www.bxwx9.org/b/21/21385/index.html",0,20);
+		List<Chapter> getsChapter = chapterSpider.getChapters("https://www.bxwx9.org/b/21/21385/index.html",0,20);
 		int cont=1;
 		for(Chapter chapter:getsChapter){
 			System.out.println(cont+""+chapter);
@@ -155,7 +155,7 @@ public class TestBXWXcase {
 	public void testGetChapters4(){
 		AbstractChapterSpider chapterSpider = new BxwxChapterSpider() {
 		};
-		List<Chapter> getsChapter = chapterSpider.getsChapter("https://www.bxwx9.org/b/21/21385/index.html");
+		List<Chapter> getsChapter = chapterSpider.getChapters("https://www.bxwx9.org/b/21/21385/index.html");
 		int cont=1;
 		for(Chapter chapter:getsChapter){
 			System.out.println(cont+""+chapter);
@@ -221,6 +221,22 @@ public class TestBXWXcase {
 		session.commit();
 		session.close();
 
+	}
+	@Test
+	public void testChapter(){
+		String url="https://www.bxwx9.org/b/215/215253/index.html";
+		int offset=19;
+		int length=9999;
+		IChapterSpider chapterSpider = NovelSpiderFactory.getChapterSpider(url);
+		Elements elements = chapterSpider.getChapterElements(url);
+		List<Chapter> chapters = chapterSpider.getChapterFromElements(elements, offset, length);
+		int size = elements.size();
+		chapters = chapterSpider.getChapterFromElements(elements, offset, length);
+		System.out.println(chapters.size());
+		for (Chapter chapter : chapters) {
+			System.out.println(chapter);
+			
+		}
 	}
 	
 

@@ -17,7 +17,7 @@ import novel.spider.util.NovelSpiderUtil;
 
 public abstract class AbstractChapterSpider extends AbstractSpider implements IChapterSpider {
 	@Override
-	public List<Chapter> getsChapter(String url) {
+	public List<Chapter> getChapters(String url) {
 		try {
 			String result = crawl(url);
 			Document doc = Jsoup.parse(result);
@@ -37,15 +37,20 @@ public abstract class AbstractChapterSpider extends AbstractSpider implements IC
 		}
 	}
 	@Override
-	public List<Chapter> getsChapter(String url, int offset, int length) {
+	public List<Chapter> getChapters(String url, int offset, int length) {
 		try {
 			String result = crawl(url);
 			Document doc = Jsoup.parse(result);
 			doc.setBaseUri(url);
 			Elements as = doc.select(NovelSpiderUtil.getContext(NovelSiteEnum.getEnumByUrl(url)).get("chapter-list-selector"));
+			int len = as.size();
+			if(length<0){}
+			else if(offset+length<=as.size() && offset+length>0){
+				len=offset+length;
+			}
 			List<Chapter> chapters = new ArrayList<>();
 			
-			for (int i=offset;i<offset+length;i++) {
+			for (int i=offset;i<len;i++) {
 				Chapter chapter = new Chapter();
 				chapter.setTitle(as.get(i).text());
 				chapter.setUrl(as.get(i).absUrl("href"));
@@ -76,6 +81,25 @@ public abstract class AbstractChapterSpider extends AbstractSpider implements IC
 		chapter.setUrl(e.absUrl("href"));
 		return chapter;
 	}
+	
+	@Override
+	public List<Chapter> getChapterFromElements(Elements e,int offset,int length) {
+		try {
+			Elements as = e;
+			List<Chapter> chapters = new ArrayList<>();
+			
+			for (int i=offset;i<offset+length;i++) {
+				Chapter chapter = new Chapter();
+				chapter.setTitle(as.get(i).text());
+				chapter.setUrl(as.get(i).absUrl("href"));
+				chapters.add(chapter);
+			}
+			return chapters;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
 
 
 }
